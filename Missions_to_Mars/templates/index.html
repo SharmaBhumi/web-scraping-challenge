@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title> Mission to Mars </title>
+    <style>
+        .box1
+{
+  border-color: #DBDEE0;
+  border-width: 1px;
+  border-style: solid;
+  margin: 40px 0px 30px 0px;
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  background-color: #FFFFFF;
+}
+.box2
+{
+  border-color: #DBDEE0;
+  border-width: 1px;
+  border-style: solid;
+  margin: 40px 0px 30px 0px;
+  float: left;
+  width: 100%;
+  font-size: 14px;
+  background-color: #FFFFFF;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+  
+      <div class="jumbotron text-center">
+        <h1>Mission to Mars</h1>
+        <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+      </div>
+  
+      <!-- Mars data -->
+      <div class="row" id="mars latest news">
+        <div class="col-md-12">
+          <h4 class="heading"><strong>Latest Mars News</strong></h4>
+          <large><strong>{{Mars_dict.Heading}}</strong></large><br>
+          <p>{{Mars_dict.Summary}}</p>
+        </div>
+      
+      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-left">
+        
+        <!-- <div class="thumbnail"> -->
+          <div class="box-title pull-left">
+          <h3>Featured Mars Image</h3>
+          </div>
+          <div class="box-content">
+                <img src={{Mars_dict.Featured_Image}} class="img-fluid" atl="Featured Image Mars" width=90%>
+          
+          </div> 
+          </div>
+
+          <div class="row" id="mars facts"></div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="box2">
+                <div class="box-title align-self-center">
+                <h4>Current Weather on Mars</h4>
+                <medium>{{Mars_dict.Mars_Weather}}</medium><br>
+                     
+          </div>
+        </div>
+
+        <div class=mars_facts>
+                <h3>Mars Facts</h3>
+                {{Mars_dict.Mars_Facts | safe}}
+            </div> 
+                                
+      </div>
+    </div>     
+     
+    <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-center">Mars Hemispheres</h2>
+                </div>
+            </div>
+            <div class="row">
+                {%for hemisphere in Mars_dict.Mars_hemisphere %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <img class="card-img-top" src={{hemisphere.img_url}} atl={{hemisphere.title}}>
+                        <div class="card-body">
+                            <p class="card-text font-weight-bold">{{hemisphere.title}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+    </div>
+  </body>
+  
+</html>
