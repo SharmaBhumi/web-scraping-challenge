@@ -11,7 +11,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/Mars_dict")
 @app.route('/')
 def home():
     mars_news = mongo.db.collection.find_one()
-    return render_template('index.html', Mars_dict=mars_news)
+    return render_template('index.html', Mars_dict = mars_news)
 
 
 @app.route('/scrape')
