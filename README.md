@@ -2,7 +2,7 @@
 
 ![mission_to_mars](Images/mission_to_mars.png)
 
-In this web application data is scraped from various websites for data related to the Mission to Mars and the information in a single is displayed on an HTML page. The following outlines what is done.
+In this web application data is scraped from various websites for data related to the Mission to Mars and the information is displayed on an HTML page. The following outlines what is done.
 
 ## Step 1 - Scraping
 
