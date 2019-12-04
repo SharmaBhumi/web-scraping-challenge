@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
 import scrape_mars
+# import mission_to_mars
 
 
 app = Flask(__name__)
@@ -10,7 +11,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/Mars_dict")
 
 @app.route('/')
 def home():
-    mars_news = mongo.db.collection.find_one()
+    mars_news = mongo.db.mars_data.find_one()
     return render_template('index.html', Mars_dict = mars_news)
 
 

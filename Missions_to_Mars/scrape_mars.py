@@ -10,22 +10,18 @@ import pandas as pd
 
 def scrape_mars():
 
-
-    #Mars News
+#Mars News
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
 
     # Retrieve page with the requests module
     response = requests.get(url)
 
-
     # Create BeautifulSoup object; parse with 'lxml'
     soup = BeautifulSoup(response.text, 'lxml')
-
 
     # Extract title text
     title = soup.title.text
     print(title)
-
 
     # Print all paragraph texts
     paragraphs = soup.find_all('p')
@@ -33,15 +29,12 @@ def scrape_mars():
         news_p=paragraph.text
         print(news_p)
 
-
-
+#Featured Image for Mars
     executable_path = {'executable_path': 'chromedriver.exe'}
     browser = Browser('chrome', **executable_path, headless=False)
 
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url)
-
-
 
     # HTML object
     html = browser.html
@@ -54,19 +47,16 @@ def scrape_mars():
             f = article.find('footer')
             link = f.find('a')
             href = link['data-fancybox-href']
-            featured_image_url ='https://www.jpl.nasa.gov/'+ href
+            featured_image_url ='https://www.jpl.nasa.gov'+ href
     #         title = link['data_title']
             print('-----------')
             print(title)
             print(link.text.strip())
             print(featured_image_url)
 
-
     browser.quit()
 
-
-    #twitter data for Mars weather
-
+#twitter data for latest Mars weather data
     twitter_browser = Browser('chrome', **executable_path, headless=False)
     tweet_url='https://twitter.com/marswxreport?lang=en'
     twitter_browser.visit(tweet_url)
@@ -85,7 +75,6 @@ def scrape_mars():
     # print(tweet)
     mars_weather=tweet[2].strip()+" "+tweet[3]+" "+tweet[4]
     print(mars_weather)
-
     twitter_browser.quit()
 
 
@@ -97,12 +86,10 @@ def scrape_mars():
     space_soup = BeautifulSoup(space_html, 'lxml')
     space_table = space_soup.find('table', class_="tablepress tablepress-id-p-mars")
 
-
     mars_df = pd.read_html(mars_fact_url)[0]
     mars_df.columns=['profile','facts']
     mars_df.set_index('profile', inplace=True)
     mars_df
-
 
     html_table = mars_df.to_html()
     html_table.replace('\n', '')
@@ -110,12 +97,12 @@ def scrape_mars():
 
     browser.quit()
 
-
-    #Mars Hemisphere
+#Mars Hemisphere images
     executable_path = {'executable_path': 'chromedriver.exe'}
     USGS_browser = Browser('chrome', **executable_path, headless=False)
     USGS_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     USGS_browser.visit(USGS_url)
+
 
     USGS_html = USGS_browser.html
     USGS_soup = BeautifulSoup(USGS_html, 'lxml')
@@ -135,17 +122,21 @@ def scrape_mars():
         hemi_dict = {"title":USGS_title,"img_url": USGS_img_url}
         hemisphere_image_urls.append(hemi_dict)
     hemisphere_image_urls
+
     USGS_browser.quit()
 
-
- ## dictionary with scraped details
-
-    Mars_dict = {"Heading": title, \
-                "Summary": news_p, \
-                "Featured_Image": featured_image_url, \
-                "Mars_Weather": mars_weather, \
-                "Mars_Facts": html_table, \
+#Dictionary for the collected Mars data
+    Mars_dict = {"Heading": title,
+                "Summary": news_p, 
+                "Featured_Image": featured_image_url,
+                "Mars_Weather": mars_weather,
+                "Mars_Facts": html_table,
                 "Mars_hemisphere": hemisphere_image_urls}
+
 
     print(Mars_dict)
     return Mars_dict
+
+
+
+
